@@ -22,4 +22,4 @@ A continuación se detallan los parámetros y restricciones técnicas para la fa
 6. **Gerber Drill** $\rightarrow$ `.drl`
 
 Con estas especificación dadas por el labortario, este fue el resultado de la PCB en Kicad:
-![PCB]()
+![PCB](https://github.com/davillamilm/Indebidos-2026-1/blob/994c40a167e61e321b9a2fb1c71cf60042479895/Microcontrolador/Funcionamineto/imagenes/PCB.png)
