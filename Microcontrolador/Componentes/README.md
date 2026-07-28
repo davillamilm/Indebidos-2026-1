@@ -17,7 +17,7 @@ LED's
 - [Rojo 0805](https://www.sigmaelectronica.net/producto/led-0805-rojo/) Cantidad: 1
 - [Verde 0805](https://www.sigmaelectronica.net/producto/led-0805-verde/) Cantidad: 1
 
-[Regulador de voltaje AMS1117-3.3V](https://www.sigmaelectronica.net/producto/ams1117-3-3/) Cantidad: 1
+[Regulador de voltaje AMS1117-3.3V](https://www.sigmaelectronica.net/producto/ams1117-3-3/) Cantidad: 1 \\
 [Pulsadores](https://www.sigmaelectronica.net/producto/sw-761smd/) Cantidad: 2
 [Modulo USB-C hembra](https://www.mactronica.com.co/adaptador-usb-tipo-c-hembra-a-pines?srsltid=AfmBOoo8U8UHMpT8cBrXWdXzUKa1g4jwYG1Y2OF7YvxPVcwhy3ffEST2) Cantidad: 1
 [Microfono MAX4466](https://www.sigmaelectronica.net/producto/tarjeta-max4466/) Cantidad: 1
