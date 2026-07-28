@@ -5,4 +5,4 @@ En esta carpeta se explica como fue el diseño de la PCB y los componentes que e
 - Parámetros de funcionamiento del proyecto
 - Componentes
 - PCB
-- Placa en funcionamiento
+- Microcontrolador final
