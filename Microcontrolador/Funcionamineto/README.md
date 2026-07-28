@@ -11,3 +11,4 @@ En la parte superior izquierda hace referencia de por donde va ser alimentado el
 
 Como fuente de alimentación de la placa se uso el mismo conector que va directo al PC, por lo tanto este va suministrar 5 V, por lo tanto es necesario un regulador de voltaje que tenga como salida 3.3 V que es lo que necesita el chip, también se agregó un led en la etapa de salida del regulador para que enseñara que la placa si estaba recibiendo alimentación. Para el proyecto se necesita 1 sensor (micrófono) y 2 actuadores (led y servo) para cada uno de estos solo se necesita un pin GPIO, para el micrófono se utilizó el GPIO 2, para el led el GPIO1 y para el servo se uso el GPIO 14. Todos los componentes necesarios conectados entre si y al chip se ven en la siguiente imagen:
 
+![Esquematico](https://github.com/davillamilm/Indebidos-2026-1/blob/a6b9b668122682f071534d5b1973920b97319418/Microcontrolador/Funcionamineto/imagenes/Esquematico.png)
