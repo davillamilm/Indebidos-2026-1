@@ -40,9 +40,9 @@ Esta es la fase final de preparación de datos, arquitectura y entrenamiento de 
 - Pipeline de datos (tf.data): Aplica la función procesar_audio a todas las rutas de archivo en paralelo (AUTOTUNE) para no saturar la memoria, y agrupa los espectrogramas en lotes de 32 (batch(32)) para procesarlos eficientemente.
 
 - Definición de la Red Neuronal (CNN):
-  -Entrada y ajuste: Recibe la imagen de 64x64x1 (generada por get_spectrogram) e inmediatamente la redimensiona a 32x32 (aquí es donde se aplica el recorte para aligerar la memoria de la ESP32-S3).
-  -Extracción de características: Pasa la imagen por dos capas de convolución (Conv2D) y reducción (MaxPooling2D) para detectar patrones visuales en el audio (frecuencias y tiempos).
-  -Clasificación: Aplanar los datos (Flatten) y los pasa a una capa Dense final que calcula la probabilidad de pertenecer a cada una de las clases mediante softmax.
+    -Entrada y ajuste: Recibe la imagen de 64x64x1 (generada por get_spectrogram) e inmediatamente la redimensiona a 32x32 (aquí es donde se aplica el recorte para aligerar la memoria de la ESP32-S3).
+    -Extracción de características: Pasa la imagen por dos capas de convolución (Conv2D) y reducción (MaxPooling2D) para detectar patrones visuales en el audio (frecuencias y tiempos).
+    -Clasificación: Aplanar los datos (Flatten) y los pasa a una capa Dense final que calcula la probabilidad de pertenecer a cada una de las clases mediante softmax.
 
 - Compilación y entrenamiento: Configura el modelo con el optimizador Adam y la pérdida sparse_categorical_crossentropy (ideal porque las etiquetas son números enteros), e inicia el entrenamiento (fit) ejecutando 90 pasadas completas (epochs=90) sobre los datos.
 
