@@ -17,7 +17,7 @@ Para entrenar una IA con audio se tienen dos caminos, entrenamiento con los audi
 
 # Recorte de audios
 
-Dado que cada persona se tomaba su tiempo para decir la palabra "Abrir" al momento de grabar el Audio la ventana era de 2 segundos, posteriormente cuando ya se tenian todos los audios se opto por recortarlos a 1 segundo, esto ayudaria a la IA en que el lapso de reconocimiento fuera mucho menor y la validacion mucho mas rapida. Este recorte se hizo con el codigo de [Recorte]() de la carpeta src.
+Dado que cada persona se tomaba su tiempo para decir la palabra "Abrir" al momento de grabar el Audio la ventana era de 2 segundos, posteriormente cuando ya se tenian todos los audios se opto por recortarlos a 1 segundo, esto ayudaria a la IA en que el lapso de reconocimiento fuera mucho menor y la validacion mucho mas rapida. Este recorte se hizo con el codigo de [Recorte](https://github.com/davillamilm/Indebidos-2026-1/blob/67e7ec42d652365bc5dccb43b2e07557b704bf3f/Miniproyecto%201/IA/src/Recorte.py) de la carpeta src.
 
 # Aumento de datos
 
