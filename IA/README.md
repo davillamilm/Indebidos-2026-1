@@ -1,2 +1,0 @@
-### Entrenamiento IA
-
