@@ -46,10 +46,3 @@ Esta es la fase final de preparación de datos, arquitectura y entrenamiento de 
 
 - Compilación y entrenamiento: Configura el modelo con el optimizador Adam y la pérdida sparse_categorical_crossentropy (ideal porque las etiquetas son números enteros), e inicia el entrenamiento (fit) ejecutando 90 pasadas completas (epochs=90) sobre los datos.
 
-
-1. Tema principal
-    1. Subtema nivel 1
-        1. Sub-subtema nivel 2
-    2. Otro subtema nivel 1
-2. Segundo tema principal
-
