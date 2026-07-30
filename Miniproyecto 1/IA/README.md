@@ -25,14 +25,14 @@ Posteriormente se multiplicaron la cantidad de datos en ambas ramas usando el c�
 
 # Procesar los datos
 
-Esta función toma la ruta de un archivo de audio .wav y devuelve la tupla (espectrograma, etiqueta_numérica) lista para alimentar o entrenar un modelo de aprendizaje automático, esta funcion de llama "[procesar_audio]()". El proceso se divide en 2: 
+Esta función toma la ruta de un archivo de audio .wav y devuelve la tupla (espectrograma, etiqueta_numérica) lista para alimentar o entrenar un modelo de aprendizaje automático, esta funcion de llama "[procesar_audio](https://github.com/davillamilm/Indebidos-2026-1/blob/b70c28ea2291d912af3b7f39ba77e8cc5bf911fe/Miniproyecto%201/IA/src/Entrenamiento.py)". El proceso se divide en 2: 
 
 - Obtiene la etiqueta numérica: Extrae el nombre de la carpeta que contiene el archivo (que actúa como nombre de la clase) a partir de la ruta y lo convierte en un número entero buscando su índice en la lista de clases
 - Lee y procesa el audio: Carga el archivo desde el disco, decodifica el audio en mono (1 canal) a 16,000 muestras, elimina la dimensión extra del canal y llama a la función get_spectrogram() para convertir la onda sonora en la imagen final.
 
 # Espectrogama
 
-Como se opto por el metodo de entrenamiento que utiliza la transformada de fourier, se uso la funcion "[get_espectrograma]()" en donde esta función transforma una señal de audio cruda en una imagen de espectrograma optimizada para redes neuronales con las que la ESP32-S3 sea capaz de trabajar. Lo hace en tres pasos clave: primero, rectifica y normaliza la duración del audio a exactamente 1 segundo (16,000 muestras a 16 kHz) agregando ceros al final si es muy corto. Luego, aplica la Transformada de Fourier de Tiempo Reducido (STFT) y extrae su magnitud para convertir las frecuencias del sonido en una matriz visual. Por último, le añade una dimensión de canal y la redimensiona a 64x64 píxeles para que ocupe muy poca memoria y sea rápida de procesar. 
+Como se opto por el metodo de entrenamiento que utiliza la transformada de fourier, se uso la funcion "[get_espectrograma](https://github.com/davillamilm/Indebidos-2026-1/blob/b70c28ea2291d912af3b7f39ba77e8cc5bf911fe/Miniproyecto%201/IA/src/Entrenamiento.py)" en donde esta función transforma una señal de audio cruda en una imagen de espectrograma optimizada para redes neuronales con las que la ESP32-S3 sea capaz de trabajar. Lo hace en tres pasos clave: primero, rectifica y normaliza la duración del audio a exactamente 1 segundo (16,000 muestras a 16 kHz) agregando ceros al final si es muy corto. Luego, aplica la Transformada de Fourier de Tiempo Reducido (STFT) y extrae su magnitud para convertir las frecuencias del sonido en una matriz visual. Por último, le añade una dimensión de canal y la redimensiona a 64x64 píxeles para que ocupe muy poca memoria y sea rápida de procesar. 
 
 # Formacion red neuronal
 
