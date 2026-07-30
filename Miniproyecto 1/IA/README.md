@@ -21,7 +21,7 @@ Dado que cada persona se tomaba su tiempo para decir la palabra "Abrir" al momen
 
 # Aumento de datos
 
-Posteriormente se multiplicaron la cantidad de datos en ambas ramas usando el código de [Multiplicador]() el cual consiste en a cada una de los audios sacarle variantes con la voz mas grave, aguda y con una mayor velocidad o una menor, por lo tanto el banco de datos para entrenar la IA ya era de 115 para "Abrir" y 85 para "Ruido". Todos estos archivos se guardaron en una carpeta de Drive que contenia dos carpetas, una de nombre "abrir" y otra con nombre "ruido" con los archivos que corresponden a cada uno.
+Posteriormente se multiplicaron la cantidad de datos en ambas ramas usando el código de [Multiplicador](https://github.com/davillamilm/Indebidos-2026-1/blob/254675ed171666eeaa0aee547c45afade63feb53/Miniproyecto%201/IA/src/Multiplicador.py) el cual consiste en a cada una de los audios sacarle variantes con la voz mas grave, aguda y con una mayor velocidad o una menor, por lo tanto el banco de datos para entrenar la IA ya era de 115 para "Abrir" y 85 para "Ruido". Todos estos archivos se guardaron en una carpeta de Drive que contenia dos carpetas, una de nombre "abrir" y otra con nombre "ruido" con los archivos que corresponden a cada uno.
 
 # Procesar los datos
 
