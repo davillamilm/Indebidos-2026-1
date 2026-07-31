@@ -1,31 +1,33 @@
-# Configuración y Control de Raspberry Pi Zero 2W mediante Bluetooth
+# Configuración y control de Raspberry Pi Zero 2W mediante Bluetooth
 
 ## Descripción del proyecto
 
-Este proyecto presenta la configuración y puesta en funcionamiento de una Raspberry Pi Zero 2W como plataforma de control remoto mediante comunicación Bluetooth. El sistema permite establecer una comunicación inalámbrica entre un dispositivo móvil Android y la Raspberry Pi, de manera que las instrucciones enviadas desde el teléfono puedan utilizarse para controlar dispositivos conectados a los pines GPIO de la tarjeta.
+Este proyecto consiste en la configuración y puesta en funcionamiento de una Raspberry Pi Zero 2W como plataforma de control inalámbrico para dispositivos conectados a sus pines GPIO. La comunicación con el sistema se realiza mediante Bluetooth, permitiendo enviar instrucciones desde un dispositivo móvil hacia la Raspberry Pi para controlar diferentes actuadores.
 
-Como demostración del funcionamiento, se implementó el control de una secuencia luminosa tipo cascada utilizando cinco LEDs conectados a diferentes pines GPIO. La comunicación entre el dispositivo móvil y la Raspberry Pi se realiza mediante Bluetooth Serial utilizando el protocolo RFCOMM.
+Como aplicación de prueba, se implementó el control de cinco LEDs conectados a los pines GPIO de la Raspberry Pi. El sistema permite activar una secuencia luminosa tipo cascada y detenerla mediante comandos enviados de forma inalámbrica. Para establecer esta comunicación se utiliza Bluetooth clásico mediante el protocolo RFCOMM, mientras que el control de los dispositivos conectados a los GPIO se realiza mediante Python y la librería GPIO Zero.
 
-El sistema permite que la Raspberry Pi reciba comandos enviados desde un teléfono móvil, interprete estas instrucciones y ejecute acciones sobre los dispositivos conectados a sus GPIO. Aunque en esta implementación se utilizan LEDs como actuadores, la arquitectura puede adaptarse para controlar otros dispositivos como relés, motores, servomotores u otros actuadores compatibles.
+La implementación desarrollada permite comprobar el funcionamiento conjunto de la comunicación inalámbrica, el procesamiento de comandos y el control de dispositivos físicos. Aunque en este proyecto se utilizan LEDs como actuadores, la arquitectura propuesta puede adaptarse a otras aplicaciones en las que sea necesario controlar relés, motores, servomotores u otros dispositivos compatibles con las características eléctricas de los GPIO de la Raspberry Pi.
+
+De igual manera, la estructura del sistema puede ampliarse para incorporar sensores y establecer una comunicación bidireccional, de forma que la Raspberry Pi no solo reciba comandos de control, sino que también pueda procesar información obtenida de sensores y transmitirla hacia el dispositivo móvil.
 
 ---
 
-## 1. Hardware utilizado
+## Hardware utilizado
 
-Para la implementación del sistema se utilizaron los siguientes elementos:
+Para la implementación del proyecto se utilizaron los siguientes elementos:
 
 - Raspberry Pi Zero 2W.
 - Tarjeta microSD.
 - Cinco LEDs.
 - Resistencias limitadoras de corriente de 220 Ω a 330 Ω.
 - Protoboard.
-- Cables jumper macho-hembra.
-- Computador con Windows.
-- Teléfono inteligente Android con Bluetooth.
+- Cables jumper.
+- Computador para la configuración inicial de la Raspberry Pi.
+- Dispositivo móvil con comunicación Bluetooth.
 
-La Raspberry Pi Zero 2W funciona como el controlador principal del sistema. En ella se ejecuta Raspberry Pi OS Lite y el programa desarrollado en Python encargado de gestionar la comunicación Bluetooth y el control de los dispositivos conectados a los GPIO.
+La Raspberry Pi Zero 2W funciona como la unidad principal de procesamiento y control del sistema. En ella se ejecuta Raspberry Pi OS Lite y el programa desarrollado en Python, encargado de gestionar la comunicación Bluetooth y controlar los actuadores conectados a los pines GPIO.
 
-La asignación de los LEDs utilizada en el proyecto es la siguiente:
+La conexión de los cinco LEDs se realizó utilizando la siguiente asignación:
 
 | Actuador | GPIO (BCM) | Pin físico |
 |---|---:|---:|
@@ -35,222 +37,146 @@ La asignación de los LEDs utilizada en el proyecto es la siguiente:
 | LED 4 | GPIO 10 | Pin 19 |
 | LED 5 | GPIO 9 | Pin 21 |
 
-Cada LED debe conectarse utilizando una resistencia limitadora de corriente en serie para proteger el LED y la salida GPIO de la Raspberry Pi.
+Cada LED se conecta mediante una resistencia limitadora de corriente para evitar daños en el dispositivo y garantizar un funcionamiento adecuado de las salidas GPIO.
 
 ---
 
-## 2. Instalación y flasheo del sistema operativo
+## Configuración de la Raspberry Pi
 
-El primer paso consiste en instalar el sistema operativo que ejecutará la Raspberry Pi Zero 2W. Para este proyecto se utilizó Raspberry Pi OS Lite de 64 bits, una versión del sistema operativo que no incluye un entorno gráfico de escritorio y que resulta adecuada para aplicaciones embebidas y proyectos administrados remotamente.
+### Instalación del sistema operativo
 
-La instalación se realiza utilizando Raspberry Pi Imager. Esta herramienta permite preparar la tarjeta microSD con el sistema operativo correspondiente.
+La configuración comienza con la instalación de Raspberry Pi OS Lite de 64 bits en la tarjeta microSD de la Raspberry Pi Zero 2W. Para realizar este procedimiento se utiliza Raspberry Pi Imager, herramienta que permite seleccionar el modelo de Raspberry Pi, descargar el sistema operativo correspondiente y realizar la instalación directamente sobre la tarjeta de memoria.
 
-Antes de iniciar la escritura de la imagen en la tarjeta, se configuran los parámetros necesarios para acceder posteriormente a la Raspberry Pi de forma remota.
+Antes de iniciar la escritura del sistema operativo, se configuran los parámetros necesarios para facilitar el acceso remoto posterior a la Raspberry Pi. En este proyecto se estableció el nombre de host `raspberrypi`, se configuró el usuario `indebidos` y se habilitó el servicio SSH mediante autenticación por contraseña. También se configuraron los datos de la red Wi-Fi a la que se conectaría la tarjeta durante su funcionamiento.
 
-Los parámetros utilizados fueron:
+Esta configuración permite que, una vez instalada la tarjeta microSD en la Raspberry Pi y conectada la alimentación, el sistema operativo pueda iniciar y conectarse a la red inalámbrica sin necesidad de utilizar un monitor, teclado o mouse conectados directamente a la tarjeta.
 
-- Nombre de host: `raspberrypi`
-- Usuario: `indebidos`
-- SSH: habilitado mediante autenticación por contraseña.
-- Red Wi-Fi: configurada previamente.
-- Sistema operativo: Raspberry Pi OS Lite 64-bit.
-
-La configuración previa de estos parámetros permite que la Raspberry Pi pueda iniciar y conectarse automáticamente a la red Wi-Fi sin necesidad de utilizar un monitor, teclado o mouse.
-
-Una vez configurados los parámetros, se procede a grabar el sistema operativo en la tarjeta microSD. Raspberry Pi Imager realiza la escritura de los archivos necesarios y posteriormente verifica que el proceso se haya realizado correctamente.
-
-Cuando finaliza la instalación, la tarjeta microSD se retira del computador y se inserta en la Raspberry Pi Zero 2W. Finalmente, se conecta la alimentación de la tarjeta para iniciar el sistema operativo.
+Una vez finalizado el proceso de grabación y verificación de la tarjeta microSD, esta se instala en la Raspberry Pi Zero 2W y se procede a iniciar el sistema.
 
 ---
 
-## 3. Acceso remoto mediante SSH
+## Acceso remoto mediante SSH
 
-Una vez iniciada la Raspberry Pi y conectada a la red Wi-Fi configurada, se establece una conexión remota mediante SSH.
+Después de iniciar la Raspberry Pi y establecer su conexión con la red Wi-Fi configurada, se utiliza el protocolo SSH para acceder remotamente a la terminal del sistema.
 
-SSH permite acceder a la terminal de la Raspberry Pi desde un computador externo, evitando la necesidad de conectar directamente un monitor, teclado o mouse.
+Para establecer la conexión es necesario conocer la dirección IP asignada a la Raspberry Pi dentro de la red local. Desde un computador con Windows se puede utilizar PowerShell o Windows Terminal para iniciar la sesión SSH utilizando el usuario configurado previamente.
 
-Desde Windows se puede utilizar PowerShell o Windows Terminal para establecer la conexión. Para ello, se utiliza el usuario configurado durante la instalación junto con la dirección IP asignada a la Raspberry Pi dentro de la red local.
+Una vez establecida la conexión, es posible administrar completamente la Raspberry Pi desde la terminal del computador. Esto permite instalar las herramientas necesarias, configurar los servicios del sistema y ejecutar los programas del proyecto sin necesidad de utilizar periféricos conectados directamente a la tarjeta.
 
-Una vez establecida correctamente la conexión, se obtiene acceso a la terminal del sistema y se pueden realizar de forma remota todas las tareas necesarias para configurar y ejecutar el proyecto.
-
-Este procedimiento permite trabajar con la Raspberry Pi en modo *headless*, es decir, sin utilizar periféricos externos conectados directamente a la tarjeta.
+Este método de trabajo corresponde a una configuración denominada *headless*, en la cual la Raspberry Pi funciona sin una interfaz gráfica ni dispositivos de entrada conectados de forma permanente.
 
 ---
 
-## 4. Creación del entorno virtual de Python
+## Entorno de desarrollo en Python
 
-Para ejecutar el software del proyecto se utiliza Python. Con el objetivo de mantener aisladas las dependencias y evitar conflictos con otros paquetes instalados en el sistema, se crea un entorno virtual utilizando `venv`.
+Para ejecutar el programa de control se utiliza Python. Con el objetivo de mantener separadas las dependencias del proyecto de los paquetes instalados globalmente en el sistema operativo, se crea un entorno virtual utilizando `venv`.
 
-El entorno virtual proporciona un espacio independiente donde se instalan las librerías necesarias para el proyecto.
+El entorno virtual proporciona un espacio independiente para instalar y administrar las librerías utilizadas por el proyecto. Esta configuración facilita la organización del software y permite mantener una instalación reproducible en caso de que el proyecto deba ser implementado nuevamente.
 
-Una vez creado, el entorno virtual debe activarse antes de instalar las dependencias y ejecutar el programa.
+Dentro del entorno virtual se instalan las dependencias necesarias para la comunicación Bluetooth y el control de los dispositivos conectados a los GPIO.
 
-El uso de este entorno facilita la organización del proyecto y permite mantener una configuración reproducible para futuras instalaciones.
-
----
-
-## 5. Instalación de dependencias
-
-El proyecto utiliza principalmente las siguientes herramientas y librerías:
-
-- **Python:** lenguaje utilizado para desarrollar la lógica de control.
-- **BlueDot:** proporciona soporte para la comunicación Bluetooth utilizada en el proyecto.
-- **GPIO Zero:** permite controlar de manera sencilla los dispositivos conectados a los pines GPIO de la Raspberry Pi.
-- **BlueZ:** sistema de gestión de Bluetooth utilizado por Linux.
-
-GPIO Zero se utiliza para organizar y controlar los cinco LEDs conectados a la Raspberry Pi, mientras que la comunicación Bluetooth permite recibir instrucciones de manera inalámbrica desde el teléfono móvil.
-
-Las dependencias de Python deben instalarse dentro del entorno virtual creado previamente.
+La implementación utiliza principalmente Python junto con las librerías BlueDot y GPIO Zero. GPIO Zero proporciona una interfaz sencilla para controlar los dispositivos electrónicos conectados a la Raspberry Pi, mientras que la configuración Bluetooth permite establecer la comunicación inalámbrica necesaria para recibir los comandos de control.
 
 ---
 
-## 6. Configuración del servicio Bluetooth mediante BlueZ
+## Configuración de la comunicación Bluetooth
 
-Para permitir la comunicación Bluetooth entre la Raspberry Pi y el dispositivo móvil se utiliza BlueZ, el sistema de gestión de Bluetooth empleado en Linux.
+La comunicación inalámbrica del sistema se implementa mediante Bluetooth clásico utilizando el protocolo RFCOMM. Este protocolo permite establecer una comunicación de tipo serial entre la Raspberry Pi y el dispositivo móvil.
 
-El proyecto utiliza Bluetooth clásico mediante el protocolo RFCOMM, que permite establecer una comunicación similar a un puerto serial entre la Raspberry Pi y el dispositivo móvil.
+Para gestionar la comunicación Bluetooth en el sistema operativo se utiliza BlueZ, la pila de protocolos Bluetooth implementada en Linux. La configuración del servicio Bluetooth es necesaria para permitir que el programa desarrollado en Python pueda utilizar sockets RFCOMM y establecer la conexión con el dispositivo externo.
 
-Para que Python pueda utilizar correctamente los sockets RFCOMM, es necesario configurar el servicio Bluetooth de BlueZ en modo compatible.
+Una vez realizada la configuración correspondiente del servicio BlueZ, se reinicia el servicio Bluetooth para aplicar los cambios. Posteriormente, la Raspberry Pi queda preparada para establecer una conexión con el dispositivo móvil mediante Bluetooth.
 
-Después de modificar la configuración correspondiente, se recarga la configuración de los servicios del sistema y se reinicia el servicio Bluetooth.
-
-Esta configuración es necesaria para que el programa pueda crear correctamente el servidor Bluetooth y aceptar conexiones provenientes del teléfono móvil.
+El emparejamiento se realiza desde la configuración Bluetooth del dispositivo móvil. Una vez que ambos dispositivos han sido vinculados correctamente, se utiliza la aplicación Serial Bluetooth Terminal para enviar los comandos de control hacia la Raspberry Pi.
 
 ---
 
-## 7. Emparejamiento Bluetooth con el teléfono móvil
+## Conexión de los actuadores
 
-Una vez configurado el servicio Bluetooth, se realiza el emparejamiento entre la Raspberry Pi y un teléfono inteligente Android.
+Los actuadores utilizados para comprobar el funcionamiento del sistema son cinco LEDs conectados a diferentes pines GPIO de la Raspberry Pi Zero 2W.
 
-La Raspberry Pi se configura para que su adaptador Bluetooth esté activo, visible y disponible para realizar el proceso de emparejamiento.
+Cada salida GPIO controla un LED y la conexión se realiza utilizando una resistencia limitadora de corriente. Los cinco dispositivos son gestionados desde el programa mediante la librería GPIO Zero, lo que permite tratarlos como un conjunto y recorrerlos de forma secuencial.
 
-Desde el teléfono móvil se busca el dispositivo Bluetooth correspondiente a la Raspberry Pi y se inicia la vinculación.
+El objetivo de esta configuración es generar una secuencia luminosa en la que los LEDs se encienden uno después de otro, produciendo un efecto de desplazamiento o cascada.
 
-Durante este proceso puede solicitarse la confirmación de una clave de emparejamiento. Una vez aceptada, ambos dispositivos quedan vinculados.
-
-Para la comunicación se utiliza la aplicación **Serial Bluetooth Terminal**, que permite enviar mensajes de texto desde el teléfono móvil hacia la Raspberry Pi mediante Bluetooth.
+La selección de los LEDs como actuadores permite visualizar fácilmente las acciones ejecutadas por el sistema. Sin embargo, la misma lógica de control puede utilizarse como base para manejar otros dispositivos conectados a los GPIO, siempre que se utilicen los circuitos de interfaz y protección adecuados.
 
 ---
 
-## 8. Conexión de los actuadores a los GPIO
+## Funcionamiento del sistema de control
 
-Con la Raspberry Pi configurada y la comunicación Bluetooth preparada, se realiza la conexión física de los actuadores.
+El programa principal del proyecto tiene dos funciones fundamentales: mantener la comunicación Bluetooth con el dispositivo móvil y controlar los actuadores conectados a los GPIO.
 
-En esta implementación se utilizaron cinco LEDs conectados a los GPIO 17, 27, 22, 10 y 9.
+Al iniciar la ejecución, el programa configura los cinco LEDs y establece la lógica necesaria para controlar la secuencia luminosa. Paralelamente, se inicia un hilo de ejecución independiente encargado de ejecutar continuamente el comportamiento de los LEDs.
 
-Cada salida GPIO controla un LED independiente mediante una resistencia limitadora conectada en serie.
+Mientras el hilo de control se encarga de la secuencia luminosa, el proceso principal permanece disponible para recibir información mediante la conexión Bluetooth RFCOMM.
 
-Los LEDs funcionan como actuadores de demostración del sistema. El programa controla su comportamiento y genera una secuencia luminosa tipo cascada.
+Cuando se establece la comunicación, el programa recibe los mensajes enviados desde la aplicación Serial Bluetooth Terminal. Cada mensaje es interpretado como una instrucción de control y, dependiendo de su contenido, se modifica el estado de funcionamiento del sistema.
 
-La arquitectura utilizada puede adaptarse para controlar otros dispositivos conectados a los GPIO, como módulos de relé, motores, servomotores u otros actuadores compatibles.
+Para esta implementación se definieron dos comandos principales:
 
----
+- `avanzar`: activa la ejecución de la secuencia luminosa.
+- `detener`: interrumpe la secuencia y apaga los cinco LEDs.
 
-## 9. Funcionamiento general del programa
+Cuando se recibe el comando `avanzar`, el sistema cambia su estado de funcionamiento y permite que el hilo encargado del control de los LEDs ejecute la secuencia.
 
-El programa desarrollado en Python tiene como objetivo establecer la comunicación Bluetooth y utilizar los mensajes recibidos para controlar los actuadores conectados a la Raspberry Pi.
+Por otra parte, cuando se recibe el comando `detener`, el estado de funcionamiento cambia a inactivo y los LEDs son apagados. La secuencia cuenta con comprobaciones periódicas del estado del sistema, por lo que puede interrumpirse rápidamente cuando se recibe la orden de detener el funcionamiento.
 
-Su funcionamiento se divide principalmente en tres componentes:
-
-1. Configuración de los actuadores.
-2. Ejecución de la secuencia de control.
-3. Comunicación Bluetooth para recibir instrucciones.
-
-Al iniciar, el programa configura los cinco LEDs conectados a los GPIO correspondientes.
-
-Posteriormente, se ejecuta un proceso independiente encargado de controlar la secuencia luminosa.
-
-Al mismo tiempo, el programa principal configura un servidor Bluetooth RFCOMM y permanece esperando una conexión proveniente del dispositivo móvil.
-
-Cuando el teléfono establece la conexión, la Raspberry Pi comienza a recibir los mensajes enviados desde la aplicación Serial Bluetooth Terminal.
-
-Los mensajes recibidos son interpretados como comandos de control.
-
-En la implementación realizada se utilizan principalmente dos comandos:
-
-- `avanzar`: activa la secuencia luminosa.
-- `detener`: detiene la secuencia y apaga todos los LEDs.
-
-Cuando se recibe el comando `avanzar`, el sistema cambia su estado interno y permite que la secuencia luminosa comience a ejecutarse.
-
-Cuando se recibe el comando `detener`, el sistema interrumpe la secuencia y apaga todos los LEDs.
-
-Si se recibe un comando diferente a los establecidos, el sistema lo identifica como un comando no reconocido y no realiza ninguna acción sobre los actuadores.
+Si se recibe un mensaje diferente de los comandos establecidos, este se identifica como una instrucción no reconocida y no genera ninguna acción sobre los actuadores.
 
 ---
 
-## 10. Control concurrente mediante hilos
+## Ejecución concurrente mediante hilos
 
-Una característica importante de la implementación es el uso de hilos de ejecución (*threading*).
+El uso de hilos de ejecución es una parte importante de la arquitectura del sistema. La Raspberry Pi debe ser capaz de ejecutar la secuencia luminosa y, al mismo tiempo, permanecer disponible para recibir nuevos comandos mediante Bluetooth.
 
-El sistema necesita realizar simultáneamente dos tareas:
+Para lograrlo, el programa utiliza un hilo independiente que ejecuta la función encargada de controlar los LEDs. De esta manera, la comunicación Bluetooth continúa funcionando mientras la secuencia luminosa se encuentra activa.
 
-- Esperar y recibir comandos mediante Bluetooth.
-- Ejecutar continuamente la secuencia de los LEDs.
+El estado del sistema se controla mediante una variable que indica si la secuencia debe estar ejecutándose o permanecer detenida. El hilo encargado de las luces consulta continuamente este estado y actúa de acuerdo con su valor.
 
-Para lograrlo, se utiliza un hilo independiente encargado de ejecutar la secuencia de iluminación.
+Cuando el sistema se encuentra detenido, los LEDs permanecen apagados. Cuando se recibe una orden de activación, el hilo comienza a recorrer la secuencia de iluminación.
 
-Mientras este hilo controla los LEDs, el programa principal permanece disponible para recibir nuevos comandos mediante Bluetooth.
-
-La comunicación entre ambas partes se realiza mediante una variable de estado que indica si la secuencia debe estar activa o detenida.
-
-Cuando el sistema está detenido, los LEDs permanecen apagados. Cuando se recibe la orden de activación, el hilo comienza a ejecutar la secuencia.
-
-Esta arquitectura permite que el sistema responda rápidamente a las instrucciones recibidas desde el teléfono móvil.
+Esta estructura permite que el sistema responda de manera rápida a los comandos recibidos, evitando que la ejecución de la secuencia bloquee la comunicación Bluetooth.
 
 ---
 
-## 11. Secuencia de iluminación
+## Secuencia luminosa
 
-La secuencia implementada genera un efecto de cascada en el que los LEDs se encienden uno después de otro.
+La secuencia implementada consiste en encender los cinco LEDs de manera consecutiva. Cada LED permanece encendido durante un intervalo determinado y posteriormente se apaga antes de continuar con el siguiente.
 
-El programa utiliza diferentes intervalos de tiempo para modificar la velocidad de desplazamiento de la secuencia.
+El programa utiliza diferentes tiempos de espera para modificar progresivamente la velocidad de la secuencia. De esta manera, el efecto visual comienza con una velocidad más lenta y posteriormente aumenta su rapidez.
 
-La secuencia recorre los cinco LEDs en orden, encendiendo cada uno durante un intervalo determinado antes de apagarlo y continuar con el siguiente.
+Para la velocidad más alta se realizan un mayor número de repeticiones con el objetivo de que el efecto pueda apreciarse correctamente antes de continuar con la siguiente etapa de la secuencia.
 
-Los intervalos utilizados permiten generar diferentes velocidades de funcionamiento, desde una secuencia lenta hasta una más rápida.
-
-Cuando se alcanza la velocidad máxima, se aumenta el número de repeticiones para que el efecto visual pueda ser apreciado antes de cambiar nuevamente de velocidad.
-
-La secuencia permanece activa mientras el sistema se encuentre en estado de ejecución.
-
-Cuando se recibe el comando `detener`, el sistema interrumpe la secuencia y apaga inmediatamente los actuadores.
+La ejecución continúa mientras el sistema permanezca en estado activo. En el momento en que se recibe el comando `detener`, la secuencia se interrumpe y los cinco LEDs se apagan.
 
 ---
 
-## 12. Comunicación Bluetooth como interfaz de control
+## Comunicación entre el dispositivo móvil y la Raspberry Pi
 
-La comunicación Bluetooth funciona como una interfaz inalámbrica entre el usuario y el sistema embebido.
+La comunicación Bluetooth funciona como la interfaz entre el usuario y el sistema de control. El dispositivo móvil se utiliza para enviar instrucciones, mientras que la Raspberry Pi recibe y procesa dichas instrucciones para generar acciones sobre los dispositivos conectados a sus GPIO.
 
-El teléfono inteligente actúa como dispositivo de control y la Raspberry Pi funciona como servidor.
-
-El usuario envía una instrucción desde la aplicación Serial Bluetooth Terminal y esta información es transmitida mediante una conexión Bluetooth RFCOMM.
-
-La Raspberry Pi recibe los datos, interpreta el comando y ejecuta la acción correspondiente sobre los GPIO.
-
-El flujo general del sistema es:
+El flujo general de información puede representarse de la siguiente manera:
 
 **Dispositivo móvil → Bluetooth RFCOMM → Raspberry Pi → Procesamiento del comando → GPIO → Actuador**
 
-En la implementación realizada:
+En la implementación desarrollada, el funcionamiento es:
 
-**Teléfono Android → Comando Bluetooth → Raspberry Pi → Procesamiento → GPIO → LEDs**
+**Dispositivo móvil → Comando Bluetooth → Raspberry Pi → Procesamiento → GPIO → LEDs**
 
-Esta arquitectura permite separar la interfaz de usuario de la lógica de control. El usuario puede controlar el sistema desde un dispositivo móvil sin necesidad de interactuar directamente con la Raspberry Pi.
+Esta arquitectura permite controlar el sistema de forma inalámbrica y separar la interfaz de usuario de la lógica de control. El usuario únicamente necesita enviar el comando correspondiente y la Raspberry Pi se encarga de interpretar la instrucción y ejecutar la acción asociada.
 
 ---
 
-## 13. Aplicación para sensores y actuadores
+## Aplicación a sensores y actuadores
 
-Aunque la implementación de demostración utiliza cinco LEDs, la arquitectura desarrollada puede utilizarse como base para sistemas de automatización y control más complejos.
+Aunque la implementación realizada utiliza cinco LEDs como actuadores de prueba, la arquitectura desarrollada puede utilizarse como base para aplicaciones de automatización y sistemas embebidos.
 
-En el caso de los actuadores, los comandos recibidos mediante Bluetooth pueden utilizarse para activar o desactivar diferentes dispositivos conectados a los GPIO.
+En una aplicación orientada al control de actuadores, los comandos recibidos mediante Bluetooth podrían utilizarse para activar o desactivar relés, motores, servomotores u otros dispositivos conectados a la Raspberry Pi mediante circuitos de interfaz adecuados.
 
-Por ejemplo, una instrucción enviada desde el teléfono podría activar un relé, encender un motor o modificar el estado de un sistema de señalización.
+De igual manera, el sistema puede ampliarse para incorporar sensores. En este caso, la Raspberry Pi podría adquirir información de los sensores conectados, procesar los datos obtenidos y transmitir los resultados mediante Bluetooth hacia el dispositivo móvil.
 
-De forma similar, el proyecto puede ampliarse para trabajar con sensores. La Raspberry Pi podría realizar la lectura periódica de un sensor y enviar los datos obtenidos mediante Bluetooth hacia el dispositivo móvil.
-
-El funcionamiento podría representarse de las siguientes maneras:
+El flujo de información podría establecerse en ambos sentidos:
 
 **Control de actuadores:**
 
@@ -260,40 +186,13 @@ El funcionamiento podría representarse de las siguientes maneras:
 
 `Sensores → Raspberry Pi → Procesamiento → Bluetooth → Dispositivo móvil`
 
-También es posible combinar ambas funciones para desarrollar un sistema bidireccional en el que el teléfono envíe comandos de control mientras la Raspberry Pi transmite información obtenida de diferentes sensores.
+La combinación de ambas funciones permitiría desarrollar sistemas en los que el usuario pueda enviar instrucciones de control y, simultáneamente, recibir información del estado de diferentes variables físicas.
 
-Esta arquitectura puede utilizarse como base para aplicaciones de sistemas embebidos, automatización, robótica e Internet de las Cosas (IoT).
-
----
-
-## 14. Ejecución del sistema
-
-Una vez finalizada la configuración de la Raspberry Pi, instalado el entorno virtual, configurado el servicio Bluetooth, realizado el emparejamiento con el teléfono y conectado el hardware, se procede a ejecutar el programa de control.
-
-El programa se inicia dentro del entorno virtual de Python.
-
-Cuando se ejecuta correctamente, la Raspberry Pi inicia el servidor Bluetooth RFCOMM y permanece a la espera de una conexión desde la aplicación Serial Bluetooth Terminal.
-
-El funcionamiento esperado es el siguiente:
-
-1. La Raspberry Pi inicia el programa.
-2. Se configura el control de los cinco LEDs.
-3. Se inicia el proceso encargado de ejecutar la secuencia luminosa.
-4. Se inicia el servidor Bluetooth RFCOMM.
-5. La Raspberry Pi espera una conexión.
-6. El teléfono Android establece la conexión Bluetooth.
-7. El usuario envía el comando de activación.
-8. La Raspberry Pi recibe e interpreta el comando.
-9. Se activa la secuencia de LEDs.
-10. El usuario envía el comando de detención.
-11. La Raspberry Pi detiene la secuencia.
-12. Los LEDs se apagan.
-
-El sistema también contempla el cierre de las conexiones Bluetooth y el apagado de los actuadores cuando finaliza la ejecución del programa.
+Por esta razón, la implementación desarrollada puede considerarse como una base para aplicaciones de automatización, robótica, sistemas embebidos e Internet de las Cosas.
 
 ---
 
-## 15. Arquitectura general del sistema
+## Arquitectura general del sistema
 
 ```text
                     DISPOSITIVO MÓVIL
