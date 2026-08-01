@@ -1,6 +1,6 @@
 #  Puerta Inteligente por Reconocimiento de Voz (ESP32 + Raspberry Pi Zero 2W)
 
-Este proyecto implementa un sistema embebido de control de acceso mediante reconocimiento de voz en el borde (*Edge Computing*). El sistema utiliza un microcontrolador **ESP32** para la captura precisa de audio y la activación de los indicadores de estado, y una **Raspberry Pi Zero 2W** para procesar la señal de audio mediante una Red Neuronal Convolucional (CNN) entrenada en **TensorFlow** y optimizada en **TensorFlow Lite**.
+Este proyecto implementa un sistema embebido de control de acceso mediante reconocimiento de voz en el borde. El sistema utiliza un microcontrolador **ESP32** para la captura precisa de audio y la activación de los indicadores de estado, y una **Raspberry Pi Zero 2W** para procesar la señal de audio mediante una Red Neuronal Convolucional (CNN) entrenada en **TensorFlow** y optimizada en **TensorFlow Lite**.
 
 ---
 
