@@ -1,24 +1,24 @@
-# 🚪 Puerta Inteligente por Reconocimiento de Voz (ESP32 + Raspberry Pi Zero 2W)
+# Puerta Inteligente por Reconocimiento de Voz (ESP32 + Raspberry Pi Zero 2W)
 
 Este proyecto implementa un sistema embebido de control de acceso mediante reconocimiento de voz en el borde (*Edge Computing*). El sistema utiliza un microcontrolador **ESP32** para la captura precisa de audio y la activación de los indicadores de estado, y una **Raspberry Pi Zero 2W** para procesar la señal de audio mediante una Red Neuronal Convolucional (CNN) entrenada en **TensorFlow** y optimizada en **TensorFlow Lite**.
 
 ---
 
-## 📌 Tabla de Contenidos
-- [Descripción General](#-descripción-general)
-- [Arquitectura y Hardware](#-arquitectura-y-hardware)
-- [Esquema de Conexiones (Pinout ESP32)](#-esquema-de-conexiones-pinout-esp32)
-- [Firmware del Microcontrolador (ESP32)](#-firmware-del-microcontrolador-esp32)
-- [Modelo de Inteligencia Artificial (Python / TensorFlow)](#-modelo-de-inteligencia-artificial-python--tensorflow)
-- [Explicación Detallada del Funcionamiento](#-explicación-detallada-del-funcionamiento)
+## Tabla de Contenidos
+- [Descripción General](#descripción-general)
+- [Arquitectura y Hardware](#arquitectura-y-hardware)
+- [Esquema de Conexiones (Pinout ESP32)](#esquema-de-conexiones-pinout-esp32)
+- [Firmware del Microcontrolador (ESP32)](#firmware-del-microcontrolador-esp32)
+- [Modelo de Inteligencia Artificial (Python / TensorFlow)](#modelo-de-inteligencia-artificial-python--tensorflow)
+- [Explicación Detallada del Funcionamiento](#explicación-detallada-del-funcionamiento)
   - [Funcionamiento del ESP32 (C++)](#funcionamiento-del-esp32-c)
   - [Funcionamiento del Modelo IA (Python)](#funcionamiento-del-modelo-ia-python)
-- [Conclusiones](#-conclusiones)
-- [Autores](#-autores)
+- [Conclusiones](#conclusiones)
+- [Autores](#autores)
 
 ---
 
-## 📋 Descripción General
+## Descripción General
 
 El objetivo principal es permitir la apertura/validación automática de acceso cuando el usuario pronuncia la palabra clave **"abrir"**. 
 
@@ -30,7 +30,7 @@ El objetivo principal es permitir la apertura/validación automática de acceso 
 
 ---
 
-## 🏗 Arquitectura y Hardware
+## Arquitectura y Hardware
 
 El sistema desacopla las tareas de adquisición y procesamiento en dos nodos conectados a una red WiFi local:
 
@@ -65,7 +65,7 @@ El sistema desacopla las tareas de adquisición y procesamiento en dos nodos con
 
 ---
 
-## 🔌 Esquema de Conexiones (Pinout ESP32)
+## Esquema de Conexiones (Pinout ESP32)
 
 | Componente | Pin ESP32 | Descripción |
 | :--- | :--- | :--- |
@@ -75,7 +75,7 @@ El sistema desacopla las tareas de adquisición y procesamiento en dos nodos con
 
 ---
 
-## 💻 Firmware del Microcontrolador (ESP32)
+## Firmware del Microcontrolador (ESP32)
 
 Código escrito en **C++** para Arduino IDE / PlatformIO.
 
@@ -222,7 +222,7 @@ void loop() {
 
 ---
 
-## 🧠 Modelo de Inteligencia Artificial (Python / TensorFlow)
+## Modelo de Inteligencia Artificial (Python / TensorFlow)
 
 Script en **Python** para preprocesamiento de audio, entrenamiento de la CNN y exportación del modelo a **TensorFlow Lite**.
 
@@ -327,7 +327,7 @@ with open(nombre_archivo, "wb") as f:
 
 ---
 
-## 🔍 Explicación Detallada del Funcionamiento
+## Explicación Detallada del Funcionamiento
 
 ### Funcionamiento del ESP32 (C++)
 * **Reserva Dinámica de Memoria:** Mediante `malloc(AUDIO_BYTES)` se reservan 32,000 bytes en la memoria RAM (16,000 muestras x 2 bytes por muestra). Si no hay memoria suficiente, el sistema entra en un bucle de alerta por LED.
@@ -343,7 +343,7 @@ with open(nombre_archivo, "wb") as f:
 
 ---
 
-## 📝 Conclusiones
+## Conclusiones
 
 * **Desacoplamiento Efectivo:** Separar las tareas de adquisición física (ESP32) y procesamiento de Inteligencia Artificial (Raspberry Pi) garantizó un tiempo de respuesta bajo y estable dentro de una red local.
 * **Muestreo por Hardware:** La utilización de los temporizadores internos del chip ESP32 permitió obtener muestras de voz a 16 kHz libres de ruido por tiempos de retardo de software.
@@ -351,8 +351,8 @@ with open(nombre_archivo, "wb") as f:
 
 ---
 
-## 👥 Autores
+## Autores
 
-* **Primer Autor** 
-* **Segundo Autor** 
-* **Tercer Autor** 
+* **Primer Autor** - *Facultad de Ingeniería* - [autor1@correo.com](mailto:autor1@correo.com)
+* **Segundo Autor** - *Facultad de Ingeniería* - [autor2@correo.com](mailto:autor2@correo.com)
+* **Tercer Autor** - *Facultad de Ingeniería* - [autor3@correo.com](mailto:autor3@correo.com)
