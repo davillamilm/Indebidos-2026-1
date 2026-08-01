@@ -4,13 +4,12 @@ A continuación se presenta la prueba de funcionamiento del sistema de control d
 
 ---
 
-## Ver en YouTube
+## Demostración
 
-Haz clic en la imagen o en el enlace de abajo para ver la demostración en video:
 
 [![Demostración del Proyecto](https://img.youtube.com/vi/kaeuokmCw1g/hqdefault.jpg)](https://www.youtube.com/watch?v=kaeuokmCw1g)
 
-👉 **Enlace directo:** [Ver video en YouTube](https://www.youtube.com/watch?v=kaeuokmCw1g)
+ **Enlace directo:** [Ver video en YouTube](https://www.youtube.com/watch?v=kaeuokmCw1g)
 
 ---
 
