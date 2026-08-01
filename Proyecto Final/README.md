@@ -13,7 +13,6 @@ Este proyecto implementa un sistema embebido de control de acceso mediante recon
 - [Explicación Detallada del Funcionamiento](#explicación-detallada-del-funcionamiento)
   - [Funcionamiento del ESP32 (C++)](#funcionamiento-del-esp32-c)
   - [Funcionamiento del Modelo IA (Python)](#funcionamiento-del-modelo-ia-python)
-- [Conclusiones](#conclusiones)
 - [Autores](#autores)
 
 ---
@@ -343,16 +342,10 @@ with open(nombre_archivo, "wb") as f:
 
 ---
 
-## Conclusiones
 
-* **Desacoplamiento Efectivo:** Separar las tareas de adquisición física (ESP32) y procesamiento de Inteligencia Artificial (Raspberry Pi) garantizó un tiempo de respuesta bajo y estable dentro de una red local.
-* **Muestreo por Hardware:** La utilización de los temporizadores internos del chip ESP32 permitió obtener muestras de voz a 16 kHz libres de ruido por tiempos de retardo de software.
-* **Redes Convolucionales para Voz:** La transformación del audio a espectrogramas permitió tratar las señales de sonido como imágenes, aprovechando la alta precisión de las redes convolucionales livianas mediante modelos reducidos en **TensorFlow Lite**.
-
----
 
 ## Autores
 
-* **Primer Autor** - *Facultad de Ingeniería* - [autor1@correo.com](mailto:autor1@correo.com)
-* **Segundo Autor** - *Facultad de Ingeniería* - [autor2@correo.com](mailto:autor2@correo.com)
-* **Tercer Autor** - *Facultad de Ingeniería* - [autor3@correo.com](mailto:autor3@correo.com)
+* **David Villamil** 
+* **Esteban Trejo** 
+* **Juan José González** 
